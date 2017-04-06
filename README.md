@@ -1,6 +1,4 @@
-# Alpro
-#credited, nama temen SMA :V 
+SEMESTER 2
 
-
-#branch master : semester 1
-#brance 1 : semester 2 
+HARRY NURBUDYANA
+AHMAD ALFI ADZ-DZIKRI
