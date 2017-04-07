@@ -3,8 +3,13 @@
 #include "function.cpp"
 
 void init(*admin); /*setup username admin*/
+void tampilan();
+
 
 int main() {
 init(*admin);
+
+
+
   return 0;
 }
