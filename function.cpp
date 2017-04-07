@@ -1,21 +1,27 @@
 #ifndef function_cpp
 #define function_cpp
 #include "struct_interface.h"
-#include "TUBES_alpro.cpp"
+#include <unistd.h>
 
-void init(*admin) {
+void init(admin_priv *x) {
 
-  std::cout << "Initializing....." << '\n';
-  admin->password="";
-  admin->nama_admin="Harry";
+std::cout << "Initializing....." << '\n';
 
-  std::cout << "Success...." << '\n';
+for (size_t i = 0; i <3; i++) {
+  std::cout << "." << '\n';
+  sleep(1);
+}
+
+  x->password="";
+  x->nama_admin="Harry";
+
+std::cout << "Success...." << '\n';
 
 }
 
 void tampilan(){
 
-  
+
 }
 
 #endif
