@@ -2,16 +2,22 @@
 #define STRUCT_INTERFACE_H
 
 struct user_priv{
-  /* data */
+  ua_l *next;
+
 };
 
 /*USER ADMIN LINKING*/
 struct ua_l {
-  /* data */
+  std::string nama_pengisi;
+  std::string nama_tempat;
+  std::string daerah;
 };
 
 struct admin_priv {
-  /* data */
+  ua_l *modif;
+  std::string password;
+  std::string nama_admin;
+
 };
 
 #endif
