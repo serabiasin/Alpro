@@ -2,7 +2,7 @@
 #define STRUCT_INTERFACE_H
 
 struct user_priv{
-  ua_l *next;
+  ua_l *next; /*Mempoint data melalui struct ua_l*/
 
 };
 

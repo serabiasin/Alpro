@@ -1,5 +1,10 @@
 #include <iostream>
 #include "struct_interface.h"
+void init() {
+
+
+}
+
 
 int main() {
 
