@@ -14,10 +14,13 @@ struct ua_l {
 };
 
 struct admin_priv {
+
   ua_l *modif;
   std::string password;
   std::string nama_admin;
 
 };
+
+admin_priv *admin=new admin_priv;
 
 #endif
