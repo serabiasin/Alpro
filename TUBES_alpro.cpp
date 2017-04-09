@@ -3,7 +3,6 @@
 #include "function.cpp"
 
 void init(admin_priv *x); /*setup username admin*/
-void tampilan();
 void login(admin_priv *x);
 
 int main() {

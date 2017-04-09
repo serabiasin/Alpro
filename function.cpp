@@ -36,11 +36,20 @@ x->password=password_str;
 
 }
 
-
-
-void tampilan(){
-
+/*Buat USER*/
+void user_mode() {
 
 }
+
+/*BUAT ADMIN*/
+void admin_mode() {
+
+}
+
+
+
+
+
+
 
 #endif
