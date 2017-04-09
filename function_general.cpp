@@ -41,10 +41,7 @@ void user_mode() {
 
 }
 
-/*BUAT ADMIN*/
-void admin_mode() {
 
-}
 
 
 
