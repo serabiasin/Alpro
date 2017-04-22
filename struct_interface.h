@@ -1,23 +1,28 @@
 #ifndef STRUCT_INTERFACE_H
 #define STRUCT_INTERFACE_H
 
+int flag_code=0;
 
 /*SPESIAL VARIABEL' _'   SEBAGAI TANDA struct pengisi*/
-struct pengisi {
+struct pengisi
+{
   pengisi *next;
   std::string kode_nama_;
   std::string nama_pengisi_;
 };
+pengisi *head_p=NULL;
 pengisi *data_p=new pengisi;
 
 
 /*USER-ADMIN LINKING*/
 struct ua_l {
-  std::string tanggal;
-  std::string nama_pengisi;
+  int bulan; /*3 unsur ini akan di gabung menggunakan string*/
+  int tahun;
+  int tanggal;
+  std::string nama_pengisi;  /*WIll display*/
   std::string kode_nama;
-  std::string nama_tempat;
-  std::string daerah;
+  std::string nama_tempat;  /*WIll display*/
+  std::string daerah;  /*WIll display*/
   ua_l *next;
 
 };
@@ -29,7 +34,7 @@ struct user_priv{
 ua_l *point_to; /*Mempoint data melalui struct ua_l*/
 
 };
-user_priv *sebuah_user;
+user_priv *sebuah_user=new user_priv;
 
 
 /*KONFIGURASI ADMIN*/

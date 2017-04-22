@@ -6,6 +6,16 @@
 #include <time.h>
 #include <termios.h>
 
+/*berhasil*/
+void show_event(user_priv *x) {
+  ua_l *temp=new ua_l;
+  temp=x->point_to;
+  while (temp!=NULL) {
+  std::cout << "Tempat : "<<temp->daerah << '\n';
+  std::cout << "Daerah : "<<temp->daerah << '\n';
+    temp=temp->next;
+  }
+}
 
 
 /*MENG INISIALIASI PASSWORD UNTUK ADMIN */
@@ -72,12 +82,17 @@ void usr_menu()
 	std::cout << " 2. Pencarian Berdasarkan Tanggal " << "\n";
 	std::cout << " 3. Pencarian Berdasarkan Waktu " << "\n";
 	std::cout << " 4. Pengurutan Berdasarkan Tanggal dan Waktu " << "\n";
+  std::cout << " 5. Exit" << '\n';
+
+  std::cout << "Pilih Menu : " << '\n';
 
 }
 
 /*Buat USER*/
 int user_mode() {
+  int pilih;
 usr_menu();
+std::cin >> pilih;
 }
 
 
