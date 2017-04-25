@@ -19,30 +19,27 @@ login(admin);
 x=_init_(admin);
 
 for(;;){
-if (x==false)
-{
+if (x==false){
 
 flag=user_mode();
+
 if (flag==4) {
   goto login;
-}
+    }
+
+  }
 
 
-
-}
-
-
-else if(x==true)
-{
+else if(x==true){
 
 flag=admin_mode();
 
 if (flag==4) {
   goto login;
   system("clear");
-}
+    }
 
-}
+  }
 
 
 

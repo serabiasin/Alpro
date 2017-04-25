@@ -2,16 +2,16 @@
 #define function_admin
 
 
-ua_l hapus_jadwal(){
+ua_l* hapus_jadwal(){
 
 }
 
 /*Mengambil Nama Pengisi*/
-pengisi find_pengisi(pengisi *object,std::string cari){
+pengisi *find_pengisi(pengisi *object,std::string cari){
 
 while (object!=NULL) {
   if (cari==object->kode_nama_) {
-    return *object;
+    return object;
     break;
   }
   else if(cari!=object->kode_nama_){
@@ -30,17 +30,20 @@ void show_event(admin_priv *z) {
 ua_l *x=new ua_l;
 x=z->point;
 while (x!=NULL) {
-  std::cout << "x" << '\n';
+  std::cout << x->no_kajian << '\n';
   x=x->next;
 }
 
 }
 
-int get_many_data(pengisi *x){
+/*Mengecek berapa banyak Even yang ada di data*/
+int get_many_data(admin_priv *x){
 int z=0;
+ua_l *temp=new ua_l;
+temp=x->point;
 while (x!=NULL) {
   z++;
-  x=x->next;
+  temp=temp->next;
 }
 
 return z;
@@ -82,20 +85,20 @@ void show_pengisi(pengisi *data) {
 
 /*Menu buat data nama_pengisi*/
 void make_event(admin_priv *x) {
-
+int numb=get_many_data(x)+1;
 ua_l *temp=new ua_l;
 
 std::cout << "Masukkan Tanggal : " << '\n';
 std::cin >> temp->tanggal;
 std::cout << "Masukkan Bulan : " << '\n';
 std::cin >> temp->bulan;
-std::cout << "Masukkan Tahun : " << '\n';
-std::cin >> temp ->tahun;
+// std::cout << "Masukkan Tahun : " << '\n';
+// std::cin >> temp ->tahun;
 std::cout << "Masukkan Daerah : " << '\n';
 std::cin >> temp->daerah;
 std::cout << "Masukkan Tempat Kajian Berlangsung : " << '\n';
 std::cin >> temp->nama_tempat;
-
+temp->no_kajian=numb;
 /*akan ditentukan siapa pengisi menggunakan switch*/
 std::cout << "Pengisi yang tersedia" << '\n';
 show_pengisi(data_p);
@@ -104,7 +107,7 @@ std::string kode;
 std::cin >>kode;
 
 pengisi *k_pengisi=new pengisi;
-*k_pengisi=find_pengisi(data_p,kode);
+k_pengisi=find_pengisi(data_p,kode);
 
 temp->kode_nama=k_pengisi->kode_nama_;
 temp->nama_pengisi=k_pengisi->nama_pengisi_;
@@ -116,7 +119,7 @@ delete k_pengisi;
 temp->next=head; /*Elemen selanjutnya kosong*/
 head=temp;
 x->point=head;
-
+sebuah_user->point_to=head;
 system("clear");
 
 }

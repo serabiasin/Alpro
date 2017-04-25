@@ -6,13 +6,24 @@
 #include <time.h>
 #include <termios.h>
 
-/*berhasil*/
-void show_event(user_priv *x) {
+/*berdasarkan tanggal*/
+void show_event_date(user_priv *x) {
   ua_l *temp=new ua_l;
   temp=x->point_to;
+
+	std::cout << "================================================================================================" << "\n";
+	std::cout << "  Tanggal   " << "\t" << "   Nama Pengisi  " << "\t" << "  Nama Tempat " <<"\t"<< "  Tempat " << "\n";
+  std::cout << "================================================================================================" << "\n";
   while (temp!=NULL) {
-  std::cout << "Tempat : "<<temp->daerah << '\n';
-  std::cout << "Daerah : "<<temp->daerah << '\n';
+    /*BIKIN ALGORITMA UNTUK MEMFILTER TANGGAL SAAT INI HINGGA 3 HARI KEDEPAN*/
+    if (true) {
+      /*Sesuaikan bentuk tabel*/
+      std::cout<<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t\t";
+      std::cout << temp->nama_pengisi <<"("<<temp->kode_nama<<")"<< "\t\t";
+      std::cout << temp->nama_tempat << '\n';
+    }
+
+
     temp=temp->next;
   }
 }
@@ -64,6 +75,8 @@ void tampilan_login()
   std::cout << "======================================================================" << "\n";
   std::cout  << '\n';
   std::cout  << '\n';
+  std::cout  << '\n';
+  std::cout  << '\n';
 }
 
 void login(admin_priv *x){
@@ -73,6 +86,8 @@ password_str=getpass("Masukkan Password : ");
 x->password=password_str;
 
 }
+
+
 
 void usr_menu()
 {
@@ -93,6 +108,13 @@ int user_mode() {
   int pilih;
 usr_menu();
 std::cin >> pilih;
+switch (pilih) {
+  case 1:{break;}
+  case 2:{break;}
+  case 3:{break;}
+  case 4:{break;}
+}
+
 }
 
 

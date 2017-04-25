@@ -18,11 +18,12 @@ pengisi *data_p=new pengisi;
 struct ua_l {
   int bulan; /*3 unsur ini akan di gabung menggunakan string*/
   int tahun;
-  int tanggal;
+  int tanggal=2017;
   std::string nama_pengisi;  /*WIll display*/
   std::string kode_nama;
   std::string nama_tempat;  /*WIll display*/
   std::string daerah;  /*WIll display*/
+  int no_kajian;
   ua_l *next;
 
 };
