@@ -1,6 +1,28 @@
 #ifndef function_admin
 #define function_admin
 
+void show_event_admin(admin_priv *x) {
+  ua_l *temp=new ua_l;
+  temp=x->point;
+system("clear");
+  std::cout << "================================================================================================" << "\n";
+  std::cout << "  Tanggal   " << "\t" << "  Nama Pengisi  " << "\t" << "Nama Tempat " <<"\t\t"<< "  Tempat " << "\n";
+  std::cout << "================================================================================================" << "\n";
+
+  while (temp!=NULL) {
+
+
+    std::cout<<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t";
+    std::cout <<"  "<< temp->nama_pengisi <<"("<<temp->kode_nama<<")"<< "\t";
+    std::cout << temp->nama_tempat << "\t\t";
+    std::cout <<"\t\t"<< temp->daerah << '\n';
+    std::cout << "\n" << '\n';
+
+    temp=temp->next;
+}
+std::cout << "\n\n\n\n" << '\n';
+
+}
 
 ua_l* hapus_jadwal(){
 
@@ -36,26 +58,15 @@ while (x!=NULL) {
 
 }
 
-/*Mengecek berapa banyak Even yang ada di data*/
-int get_many_data(admin_priv *x){
-int z=0;
-ua_l *temp=new ua_l;
-temp=x->point;
-while (x!=NULL) {
-  z++;
-  temp=temp->next;
-}
-
-return z;
-}
-
 
 void make_pengisi(pengisi *z) {
 
 pengisi *temp=new pengisi;
 
+  std::string nama_pengisi_temp;
   std::cout << "Masukkan Nama Pengisi : " << '\n';
-  std::cin >> temp->nama_pengisi_;
+  std::getline(std::cin,nama_pengisi_temp,'\n');
+  temp->nama_pengisi_=nama_pengisi_temp;
 
   pengisi:
   std::cout << "Masukkan Kode Pengisi" << '\n';
@@ -83,22 +94,59 @@ void show_pengisi(pengisi *data) {
   std::cout << "\n" << '\n';
 }
 
+/*Counting banyaknya kajian sebagai ID*/
+int counting_kajian(ua_l *z){
+
+ua_l *temp=new ua_l;
+temp=z;
+int x=0;
+
+while (temp!=NULL) {
+x++;
+temp=temp->next;
+
+}
+
+return x;
+}
+
+
 /*Menu buat data nama_pengisi*/
 void make_event(admin_priv *x) {
-int numb=get_many_data(x)+1;
+
 ua_l *temp=new ua_l;
 
+tanggal:
 std::cout << "Masukkan Tanggal : " << '\n';
 std::cin >> temp->tanggal;
+if(temp->tanggal>31 or temp->tanggal<0){
+std::cout << "RANGE NOT FOUND!" << '\n';
+goto tanggal;
+}
+
+
+bulan:
 std::cout << "Masukkan Bulan : " << '\n';
 std::cin >> temp->bulan;
-// std::cout << "Masukkan Tahun : " << '\n';
-// std::cin >> temp ->tahun;
+
+if(temp->bulan>12 or temp->bulan<0){
+std::cout << "RANGE NOT FOUND!" << '\n';
+goto bulan;
+}
+temp->tahun=2017;
+
+std::string daerah_temp;
 std::cout << "Masukkan Daerah : " << '\n';
-std::cin >> temp->daerah;
+std::cin.ignore();
+std::getline(std::cin,daerah_temp,'\n');
+temp->daerah=daerah_temp;
+
+std::string nama_tempat_temp;
 std::cout << "Masukkan Tempat Kajian Berlangsung : " << '\n';
-std::cin >> temp->nama_tempat;
-temp->no_kajian=numb;
+std::cin.ignore();
+std::getline(std::cin,nama_tempat_temp,'\n');
+temp->nama_tempat=nama_tempat_temp;
+
 /*akan ditentukan siapa pengisi menggunakan switch*/
 std::cout << "Pengisi yang tersedia" << '\n';
 show_pengisi(data_p);
@@ -111,6 +159,7 @@ k_pengisi=find_pengisi(data_p,kode);
 
 temp->kode_nama=k_pengisi->kode_nama_;
 temp->nama_pengisi=k_pengisi->nama_pengisi_;
+temp->no_kajian=(counting_kajian(x->point))+1;
 
 delete k_pengisi;
 
@@ -146,7 +195,7 @@ if (flag_code!=0) {
 
   switch (pilih) {
     case 1:{make_event(admin); break;}
-    case 2:{break;}
+    case 2:{show_event_admin(admin);break;}
     case 3:{make_pengisi(data_p);break;}
     case 4:{  system("clear");return 4;}
   }
