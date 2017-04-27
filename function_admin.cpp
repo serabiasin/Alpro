@@ -1,21 +1,23 @@
 #ifndef function_admin
 #define function_admin
 
+
 void show_event_admin(admin_priv *x) {
   ua_l *temp=new ua_l;
   temp=x->point;
 system("clear");
-  std::cout << "================================================================================================" << "\n";
-  std::cout << "  Tanggal   " << "\t" << "  Nama Pengisi  " << "\t" << "Nama Tempat " <<"\t\t"<< "  Tempat " << "\n";
-  std::cout << "================================================================================================" << "\n";
+  std::cout << "========================================================================================================================" << "\n";
+  std::cout <<"No"<<"\t"<< "  Tanggal   " << "\t" << "  Nama Pengisi  " << "\t" << "Nama Tempat " <<"\t\t"<< "  Tempat " <<"\t\t"<<"Waktu"<< "\n";
+  std::cout << "========================================================================================================================" << "\n";
 
   while (temp!=NULL) {
 
-
-    std::cout<<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t";
-    std::cout << temp->nama_pengisi <<"("<<temp->kode_nama<<")"<< "\t\t";
-    std::cout << temp->nama_tempat << "\t\t";
-    std::cout <<"\t"<< temp->daerah << '\n';
+    std::cout << temp->no_kajian << '\t';
+    std::cout <<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t";
+    std::cout <<"   "<< temp->nama_pengisi <<"("<<temp->kode_nama<<")"<<"\t";
+    std::cout <<"\t"<< temp->nama_tempat << "\t";
+    std::cout <<"\t"<< "\t"<<"  "<<temp->daerah << '\t';
+    std::cout << "\t\t"<<temp->jam<<":"<<temp->menit << '\n';
     std::cout << "\n" << '\n';
 
     temp=temp->next;
@@ -24,9 +26,45 @@ std::cout << "\n\n\n\n" << '\n';
 
 }
 
-ua_l* hapus_jadwal(){
+/*jika node lebih > 1*/
+ua_l* hapus_jadwal(admin_priv *x){
+  int no;
+  ua_l *current = x->point;
+  ua_l *previous = NULL;
+
+  //if list is empty
+  if(head == NULL) {
+     return NULL;
+  }
+
+  //navigate through list
+  while(current->no_kajian != no) {
+
+     //if it is last node
+     if(current->next == NULL) {
+        return NULL;
+     } else {
+        //store reference to current link
+        previous = current;
+        //move to next link
+        current = current->next;
+     }
+  }
+
+  //found a match, update the link
+  if(current == head) {
+     //change first to point to next link
+     head = head->next;
+  } else {
+    /*disini lah data sebelumnya tersambung ke link data yang terhapus*/
+     //bypass the current link
+     previous->next = current->next;
+  }
+
+  return current;
 
 }
+
 
 /*Mengambil Nama Pengisi*/
 pengisi* find_pengisi(pengisi *object,std::string cari){
@@ -140,6 +178,14 @@ goto bulan;
 }
 temp->tahun=2017;
 
+waktu:
+std::cout << "Masukkan Waktu(jam:menit)" << '\n';
+std::cin >> temp->jam>>temp->menit;
+if (temp->jam>24 or temp->menit>60) {
+  std::cout << "ULANGI ! " << '\n';
+  goto waktu;
+}
+
 std::string daerah_temp;
 std::cout << "Masukkan Daerah : " << '\n';
 std::cin.ignore(1);
@@ -204,7 +250,7 @@ if (flag_code!=0) {
 
   switch (pilih) {
     case 1:{make_event(admin); break;}
-    case 2:{show_event_admin(admin);break;}
+    case 2:{show_event_admin(admin);hapus_jadwal(admin);break;}
     case 3:{make_pengisi(data_p);break;}
     case 4:{ system("clear");return 4;}
   }

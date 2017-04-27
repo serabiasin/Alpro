@@ -19,6 +19,8 @@ struct ua_l {
   int bulan; /*3 unsur ini akan di gabung menggunakan string*/
   int tahun;
   int tanggal;
+  int jam;
+  int menit;
   std::string nama_pengisi;  /*WIll display*/
   std::string kode_nama;
   std::string nama_tempat;  /*WIll display*/

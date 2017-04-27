@@ -7,6 +7,41 @@
 #include <termios.h>
 #include <time.h>
 
+
+void show_pengisi(pengisi *data) {
+  std::cout << "================================================" << '\n';
+  std::cout << "NAMA " << '\t'<<'\t'<<'\t'<<"KODE"<<std::endl;
+  std::cout << "================================================" << '\n';
+  while (data!=NULL) {
+    std::cout << data->nama_pengisi_ <<'\t'<< '\t'<<'\t'<<data->kode_nama_<<std::endl;
+    data=data->next;
+  }
+  std::cout << "\n" << '\n';
+}
+
+/*Mengambil Nama Pengisi*/
+pengisi* find_pengisi(pengisi *object,std::string cari){
+pengisi *temp=new pengisi;
+temp=object;
+
+while (object!=NULL) {
+  if (cari==temp->kode_nama_) {
+
+    return object;
+    break;
+  }
+  else if(cari!=object->kode_nama_){
+    temp=temp->next; //lanjut
+  }
+  else {
+    std::cout << "NOT FOUND!!" << '\n';
+    return NULL;
+  }
+}
+
+}
+
+
 /*berdasarkan tanggal*/
 void show_event_date(user_priv *x) {
   ua_l *temp=new ua_l;
@@ -15,33 +50,169 @@ void show_event_date(user_priv *x) {
 
   time_t t=time(0);
   tm *waktu=localtime(&t);
+char pil;
+  std::cout << "ingin melihat kajian 3 hari kedepan ? " << '\n';
+  std::cin >> pil;
+int c_month;
+int c_date;
+  if (pil=='y') {
+    c_date=waktu->tm_mday;
+    c_month=waktu->tm_mon+1;
+  }
+else{
+  std::cout << "Masukkan tanggal : " << '\n';
+  std::cin >> c_date;
+  std::cout << "Masukkan Bulan : " << '\n';
+  std::cin >> c_month;
 
+}
 
 
   std::cout << "================================================================================================" << "\n";
   std::cout << "Saat Ini Tanggal : "<< waktu->tm_year+1900<<"-"<<waktu->tm_mon+1<<"-"<<waktu->tm_mday<< '\n';
   std::cout << "================================================================================================" << "\n";
   std::cout << "\n\n" << '\n';
-	std::cout << "================================================================================================" << "\n";
-	std::cout << "  Tanggal   " << "\t" << "  Nama Pengisi  " << "\t" << "Nama Tempat " <<"\t\t"<< "  Tempat " << "\n";
-  std::cout << "================================================================================================" << "\n";
+  std::cout << "========================================================================================================================" << "\n";
+  std::cout <<"No"<<"\t"<< "  Tanggal   " << "\t" << "  Nama Pengisi  " << "\t" << "Nama Tempat " <<"\t\t"<< "  Tempat " <<"\t\t"<<"Waktu"<< "\n";
+  std::cout << "========================================================================================================================" << "\n";
   while (temp!=NULL) {
     /*BIKIN ALGORITMA UNTUK MEMFILTER TANGGAL SAAT INI HINGGA 3 HARI KEDEPAN*/
+    if (c_month==temp->bulan) {
 
-    if (true) {
-      /*Sesuaikan bentuk tabel*/
-      std::cout<<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t\t";
-      std::cout << temp->nama_pengisi <<"("<<temp->kode_nama<<")"<< "\t\t";
-      std::cout << temp->nama_tempat << "\t\t";
-      std::cout << "\n" << '\n';
+      if (temp->tanggal >= c_date and temp->tanggal <=c_date+3) {
+        std::cout << temp->no_kajian << '\t';
+        std::cout <<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t";
+        std::cout <<"   "<< temp->nama_pengisi <<"("<<temp->kode_nama<<")"<<"\t";
+        std::cout <<"\t"<< temp->nama_tempat << "\t";
+        std::cout <<"\t"<< "\t"<<"  "<<temp->daerah << '\t';
+        std::cout << "\t\t"<<temp->jam<<":"<<temp->menit << '\n';
+        std::cout << "\n" << '\n';
+      }
     }
 
 
-    temp=temp->next;
+  temp=temp->next;
   }
+std::cout << "\n\n\n" << '\n';
+delete temp;
+}
+
+/*Date and time*/
+void show_event_dt(user_priv *x) {
+
+    ua_l *temp=new ua_l;
+    temp=x->point_to;
+    system("clear");
+
+    time_t t=time(0);
+    tm *waktu=localtime(&t);
+  int c_date=waktu->tm_mday;
+  int c_month=waktu->tm_mon+1;
+
+int c_jam,c_menit;
+std::cout << "Masukkan waktu yang anda cari (jam:menit): " << '\n';
+std::cin >>c_jam>>c_menit;
+
+    std::cout << "================================================================================================" << "\n";
+    std::cout << "Saat Ini Tanggal : "<< waktu->tm_year+1900<<"-"<<waktu->tm_mon+1<<"-"<<waktu->tm_mday<< '\n';
+    std::cout << "================================================================================================" << "\n";
+    std::cout << "\n\n" << '\n';
+    std::cout << "========================================================================================================================" << "\n";
+    std::cout <<"No"<<"\t"<< "  Tanggal   " << "\t" << "  Nama Pengisi  " << "\t" << "Nama Tempat " <<"\t\t"<< "  Tempat " <<"\t\t"<<"Waktu"<< "\n";
+    std::cout << "========================================================================================================================" << "\n";
+
+while(temp!=NULL){
+      /*BIKIN ALGORITMA UNTUK MEMFILTER TANGGAL SAAT INI HINGGA 3 HARI KEDEPAN*/
+      if (c_month==temp->bulan) {
+
+        if (temp->tanggal >= c_date and temp->tanggal <=c_date+3) {
+            if (temp->jam >= c_jam and temp->menit >= c_menit) {
+              std::cout << temp->no_kajian << '\t';
+              std::cout <<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t";
+              std::cout <<"   "<< temp->nama_pengisi <<"("<<temp->kode_nama<<")"<<"\t";
+              std::cout <<"\t"<< temp->nama_tempat << "\t";
+              std::cout <<"\t"<< "\t"<<"  "<<temp->daerah << '\t';
+              std::cout << "\t\t"<<temp->jam<<":"<<temp->menit << '\n';
+              std::cout  << '\n';
+            }
+        }
+      }
+
+
+    temp=temp->next;
+    }
+
+  std::cout << "\n\n\n" << '\n';
+  delete temp;
+  }
+
+
+void show_event_time(user_priv *x) {
+int c_hour,c_minute;
+ua_l*temp=new ua_l;
+temp=x->point_to;
+
+
+std::cout << "Masukkan Waktu yang ingin dicari (jam:menit) : " << '\n';
+std::cin >> c_hour>>c_minute;
+system("clear");
+
+    time_t t=time(0);
+    tm *waktu=localtime(&t);
+  int c_date=waktu->tm_mday;
+  int c_month=waktu->tm_mon+1;
+
+std::cout << "========================================================================================================================" << "\n";
+std::cout <<"No"<<"\t"<< "  Tanggal   " << "\t" << "  Nama Pengisi  " << "\t" << "Nama Tempat " <<"\t\t"<< "  Tempat " <<"\t\t"<<"Waktu"<< "\n";
+std::cout << "========================================================================================================================" << "\n";
+
+while (temp!=NULL) {
+  if (temp->tanggal >= c_date and temp->tanggal <=c_date+3) {
+    if (temp->jam==c_hour and temp->menit ==c_minute) {
+      std::cout << temp->no_kajian << '\t';
+      std::cout <<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t";
+      std::cout <<"   "<< temp->nama_pengisi <<"("<<temp->kode_nama<<")"<<"\t";
+      std::cout <<"\t"<< temp->nama_tempat << "\t";
+      std::cout <<"\t"<< "\t"<<"  "<<temp->daerah << '\t';
+      std::cout << "\t\t"<<temp->jam<<":"<<temp->menit << '\n';
+      std::cout  << '\n';
+    }
+
+
+  }
+  temp=temp->next;
+}
+
+
 
 delete temp;
 }
+
+
+void show_event_pengisi(user_priv *x) {
+ua_l *temp=new ua_l;
+temp=x->point_to;
+
+show_pengisi(data_p);
+
+std::string kode;
+std::cout << "Masukkan Kode Pengisi : " << '\n';
+std::cin >> kode;
+
+
+std::cout << "========================================================================================================================" << "\n";
+std::cout <<"No"<<"\t"<< "  Tanggal   " << "\t" << "  Nama Pengisi  " << "\t" << "Nama Tempat " <<"\t\t"<< "  Tempat " <<"\t\t"<<"Waktu"<< "\n";
+std::cout << "========================================================================================================================" << "\n";
+
+while (temp!=NULL) {
+
+
+  temp=temp->next;
+}
+
+
+}
+
 
 
 /*MENG INISIALIASI PASSWORD UNTUK ADMIN */
@@ -127,10 +298,10 @@ user->point_to=head;
 usr_menu();
 std::cin >> pilih;
 switch (pilih) {
-  case 1:{break;}
-  case 2:{show_event_date(user);break;}
-  case 3:{break;}
-  case 4:{break;}
+  case 1:{show_event_pengisi(user);break;}
+  case 2:{show_event_date(user);break;} //done
+  case 3:{show_event_time(user);break;} //done
+  case 4:{show_event_dt(user);break;} //done
   case 5:{delete user; return 4;break;} //mencegah memory leak
 }
 
