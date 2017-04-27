@@ -8,7 +8,7 @@
 #include <time.h>
 
 
-void show_pengisi(pengisi *data) {
+void show_pengisi_user(pengisi *data) {
   std::cout << "================================================" << '\n';
   std::cout << "NAMA " << '\t'<<'\t'<<'\t'<<"KODE"<<std::endl;
   std::cout << "================================================" << '\n';
@@ -20,7 +20,7 @@ void show_pengisi(pengisi *data) {
 }
 
 /*Mengambil Nama Pengisi*/
-pengisi* find_pengisi(pengisi *object,std::string cari){
+pengisi* find_pengisi_user(pengisi *object,std::string cari){
 pengisi *temp=new pengisi;
 temp=object;
 
@@ -193,19 +193,41 @@ void show_event_pengisi(user_priv *x) {
 ua_l *temp=new ua_l;
 temp=x->point_to;
 
-show_pengisi(data_p);
+  show_pengisi_user(data_p);
+
+  time_t t=time(0);
+  tm *waktu=localtime(&t);
+  int c_date=waktu->tm_mday;
+  int c_month=waktu->tm_mon+1;
+
+
 
 std::string kode;
 std::cout << "Masukkan Kode Pengisi : " << '\n';
 std::cin >> kode;
 
-
+pengisi *aki=new pengisi;
+aki=find_pengisi_user(data_p,kode);
 std::cout << "========================================================================================================================" << "\n";
 std::cout <<"No"<<"\t"<< "  Tanggal   " << "\t" << "  Nama Pengisi  " << "\t" << "Nama Tempat " <<"\t\t"<< "  Tempat " <<"\t\t"<<"Waktu"<< "\n";
 std::cout << "========================================================================================================================" << "\n";
 
 while (temp!=NULL) {
+  if (temp->tanggal >= c_date and temp->tanggal <=c_date+3) {
+    if (temp->nama_pengisi==aki->nama_pengisi_) {
 
+      std::cout << temp->no_kajian << '\t';
+      std::cout <<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t";
+      std::cout <<"   "<< temp->nama_pengisi <<"("<<temp->kode_nama<<")"<<"\t";
+      std::cout <<"\t"<< temp->nama_tempat << "\t";
+      std::cout <<"\t"<< "\t"<<"  "<<temp->daerah << '\t';
+      std::cout << "\t\t"<<temp->jam<<":"<<temp->menit << '\n';
+      std::cout  << '\n';
+
+    }
+
+
+  }
 
   temp=temp->next;
 }
