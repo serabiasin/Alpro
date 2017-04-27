@@ -13,9 +13,9 @@ system("clear");
 
 
     std::cout<<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t";
-    std::cout <<"  "<< temp->nama_pengisi <<"("<<temp->kode_nama<<")"<< "\t";
+    std::cout << temp->nama_pengisi <<"("<<temp->kode_nama<<")"<< "\t\t";
     std::cout << temp->nama_tempat << "\t\t";
-    std::cout <<"\t\t"<< temp->daerah << '\n';
+    std::cout <<"\t"<< temp->daerah << '\n';
     std::cout << "\n" << '\n';
 
     temp=temp->next;
@@ -29,21 +29,22 @@ ua_l* hapus_jadwal(){
 }
 
 /*Mengambil Nama Pengisi*/
-std::string ind_pengisi(pengisi *object,std::string cari){
+pengisi* find_pengisi(pengisi *object,std::string cari){
+pengisi *temp=new pengisi;
+temp=object;
 
 while (object!=NULL) {
-  if (cari==object->kode_nama_) {
-    std::string temp;
-    temp = object->kode_nama_;
-    return temp;
+  if (cari==temp->kode_nama_) {
+
+    return object;
     break;
   }
   else if(cari!=object->kode_nama_){
-    object=object->next; //lanjut
+    temp=temp->next; //lanjut
   }
   else {
     std::cout << "NOT FOUND!!" << '\n';
-
+    return NULL;
   }
 }
 
@@ -67,7 +68,7 @@ pengisi *temp=new pengisi;
 
   std::string nama_pengisi_temp;
   std::cout << "Masukkan Nama Pengisi : " << '\n';
-  std::cin.ignore(1);
+
   std::getline(std::cin,nama_pengisi_temp,'\n');
   temp->nama_pengisi_=nama_pengisi_temp;
 
@@ -141,7 +142,7 @@ temp->tahun=2017;
 
 std::string daerah_temp;
 std::cout << "Masukkan Daerah : " << '\n';
-std::cin.ignore();
+std::cin.ignore(1);
 std::getline(std::cin,daerah_temp,'\n');
 temp->daerah=daerah_temp;
 
@@ -158,15 +159,16 @@ kode_kode:
 std::cout << "Masukkan Kode pengisi : " << '\n';
 std::string kode;
 std::cin >>kode;
+pengisi *temp_p=new pengisi;
 
-std::string hasil_mencari;
-hasil_mencari=ind_pengisi(data_p,kode);
-if(hasil_mencari!="\0"){
-  temp->kode_nama=kode;
-  temp->nama_pengisi=hasil_mencari;
+temp_p=find_pengisi(data_p,kode);
+if (temp_p!=NULL) {
+  temp->kode_nama=temp_p->kode_nama_;
+  temp->nama_pengisi=temp_p->nama_pengisi_;
 }
-else{goto kode_kode; }
-
+else{
+goto kode_kode;
+}
 temp->no_kajian=(counting_kajian(x->point))+1;
 
 

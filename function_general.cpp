@@ -8,9 +8,9 @@
 #include <time.h>
 
 /*berdasarkan tanggal*/
-void show_event_date(ua_l *x) {
+void show_event_date(user_priv *x) {
   ua_l *temp=new ua_l;
-  temp=x;
+  temp=x->point_to;
   system("clear");
 
   time_t t=time(0);
@@ -27,13 +27,14 @@ void show_event_date(ua_l *x) {
   std::cout << "================================================================================================" << "\n";
   while (temp!=NULL) {
     /*BIKIN ALGORITMA UNTUK MEMFILTER TANGGAL SAAT INI HINGGA 3 HARI KEDEPAN*/
-    // if (true) {
-    // }
-    /*Sesuaikan bentuk tabel*/
-    std::cout<<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t\t";
-    std::cout << temp->nama_pengisi <<"("<<temp->kode_nama<<")"<< "\t\t";
-    std::cout << temp->nama_tempat << "\t\t";
-    std::cout << "\n" << '\n';
+
+    if (true) {
+      /*Sesuaikan bentuk tabel*/
+      std::cout<<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t\t";
+      std::cout << temp->nama_pengisi <<"("<<temp->kode_nama<<")"<< "\t\t";
+      std::cout << temp->nama_tempat << "\t\t";
+      std::cout << "\n" << '\n';
+    }
 
 
     temp=temp->next;
@@ -119,14 +120,18 @@ void usr_menu()
 
 /*Buat USER*/
 int user_mode() {
+user_priv *user=new user_priv;
+user->point_to=head;
+
   int pilih;
 usr_menu();
 std::cin >> pilih;
 switch (pilih) {
   case 1:{break;}
-  case 2:{show_event_date(head);break;}
+  case 2:{show_event_date(user);break;}
   case 3:{break;}
-  case 4:{return 4;break;}
+  case 4:{break;}
+  case 5:{delete user; return 4;break;} //mencegah memory leak
 }
 
 }

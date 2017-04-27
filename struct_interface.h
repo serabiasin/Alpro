@@ -35,7 +35,7 @@ struct user_priv{
 ua_l *point_to; /*Mempoint data melalui struct ua_l*/
 
 };
-user_priv *user=new user_priv;
+
 
 /*KONFIGURASI ADMIN*/
 struct admin_priv {
