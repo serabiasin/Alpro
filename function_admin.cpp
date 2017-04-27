@@ -29,11 +29,13 @@ ua_l* hapus_jadwal(){
 }
 
 /*Mengambil Nama Pengisi*/
-pengisi *find_pengisi(pengisi *object,std::string cari){
+std::string ind_pengisi(pengisi *object,std::string cari){
 
 while (object!=NULL) {
   if (cari==object->kode_nama_) {
-    return object;
+    std::string temp;
+    temp = object->kode_nama_;
+    return temp;
     break;
   }
   else if(cari!=object->kode_nama_){
@@ -65,6 +67,7 @@ pengisi *temp=new pengisi;
 
   std::string nama_pengisi_temp;
   std::cout << "Masukkan Nama Pengisi : " << '\n';
+  std::cin.ignore(1);
   std::getline(std::cin,nama_pengisi_temp,'\n');
   temp->nama_pengisi_=nama_pengisi_temp;
 
@@ -93,6 +96,7 @@ void show_pengisi(pengisi *data) {
   }
   std::cout << "\n" << '\n';
 }
+
 
 /*Counting banyaknya kajian sebagai ID*/
 int counting_kajian(ua_l *z){
@@ -143,36 +147,39 @@ temp->daerah=daerah_temp;
 
 std::string nama_tempat_temp;
 std::cout << "Masukkan Tempat Kajian Berlangsung : " << '\n';
-std::cin.ignore();
+std::cin.ignore(1);
 std::getline(std::cin,nama_tempat_temp,'\n');
 temp->nama_tempat=nama_tempat_temp;
 
 /*akan ditentukan siapa pengisi menggunakan switch*/
 std::cout << "Pengisi yang tersedia" << '\n';
 show_pengisi(data_p);
+kode_kode:
 std::cout << "Masukkan Kode pengisi : " << '\n';
 std::string kode;
 std::cin >>kode;
 
-pengisi *k_pengisi=new pengisi;
-k_pengisi=find_pengisi(data_p,kode);
+std::string hasil_mencari;
+hasil_mencari=ind_pengisi(data_p,kode);
+if(hasil_mencari!="\0"){
+  temp->kode_nama=kode;
+  temp->nama_pengisi=hasil_mencari;
+}
+else{goto kode_kode; }
 
-temp->kode_nama=k_pengisi->kode_nama_;
-temp->nama_pengisi=k_pengisi->nama_pengisi_;
 temp->no_kajian=(counting_kajian(x->point))+1;
-
-delete k_pengisi;
 
 
 
 temp->next=head; /*Elemen selanjutnya kosong*/
 head=temp;
 x->point=head;
-sebuah_user->point_to=head;
 system("clear");
 
 }
+void delete_event(admin_priv *x) {
 
+}
 
 
 /*BUAT ADMIN*/
@@ -197,7 +204,7 @@ if (flag_code!=0) {
     case 1:{make_event(admin); break;}
     case 2:{show_event_admin(admin);break;}
     case 3:{make_pengisi(data_p);break;}
-    case 4:{  system("clear");return 4;}
+    case 4:{ system("clear");return 4;}
   }
 
 }

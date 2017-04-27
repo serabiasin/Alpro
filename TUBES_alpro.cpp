@@ -25,6 +25,7 @@ flag=user_mode();
 
 if (flag==4) {
   goto login;
+  system("clear");
     }
 
   }

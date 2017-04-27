@@ -1,45 +1,45 @@
 #ifndef function_cpp
 #define function_cpp
 
-#include "struct_interface.h"
+
 #include <unistd.h>
 #include <time.h>
 #include <termios.h>
 #include <time.h>
 
 /*berdasarkan tanggal*/
-void show_event_date(user_priv *x) {
+void show_event_date(ua_l *x) {
   ua_l *temp=new ua_l;
-  temp=x->point_to;
+  temp=x;
   system("clear");
 
-  tm *waktu=new tm;
-  time_t t;
-  waktu=localtime(&t);
+  time_t t=time(0);
+  tm *waktu=localtime(&t);
+
+
 
   std::cout << "================================================================================================" << "\n";
-  std::cout << "Saat Ini Tanggal : " <<waktu->tm_hour<<":"<<waktu->tm_min<<":"<<waktu->tm_sec<< '\n';
+  std::cout << "Saat Ini Tanggal : "<< waktu->tm_year+1900<<"-"<<waktu->tm_mon+1<<"-"<<waktu->tm_mday<< '\n';
   std::cout << "================================================================================================" << "\n";
   std::cout << "\n\n" << '\n';
-  std::cout << "\n" << '\n';
 	std::cout << "================================================================================================" << "\n";
 	std::cout << "  Tanggal   " << "\t" << "  Nama Pengisi  " << "\t" << "Nama Tempat " <<"\t\t"<< "  Tempat " << "\n";
   std::cout << "================================================================================================" << "\n";
   while (temp!=NULL) {
     /*BIKIN ALGORITMA UNTUK MEMFILTER TANGGAL SAAT INI HINGGA 3 HARI KEDEPAN*/
-    if (true) {
-      /*Sesuaikan bentuk tabel*/
-      std::cout<<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t\t";
-      std::cout << temp->nama_pengisi <<"("<<temp->kode_nama<<")"<< "\t\t";
-      std::cout << temp->nama_tempat << "\t\t";
-      std::cout << "\n" << '\n';
-    }
+    // if (true) {
+    // }
+    /*Sesuaikan bentuk tabel*/
+    std::cout<<temp->tahun <<" - "<<temp->bulan <<" - " << temp->tanggal << "\t\t";
+    std::cout << temp->nama_pengisi <<"("<<temp->kode_nama<<")"<< "\t\t";
+    std::cout << temp->nama_tempat << "\t\t";
+    std::cout << "\n" << '\n';
 
 
     temp=temp->next;
   }
 
-delete waktu;
+delete temp;
 }
 
 
@@ -124,9 +124,9 @@ usr_menu();
 std::cin >> pilih;
 switch (pilih) {
   case 1:{break;}
-  case 2:{break;}
+  case 2:{show_event_date(head);break;}
   case 3:{break;}
-  case 4:{break;}
+  case 4:{return 4;break;}
 }
 
 }
