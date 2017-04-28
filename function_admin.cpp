@@ -18,89 +18,60 @@ temp=temp->next;
 return x;
 }
 
-
-
-void sorting_date(ua_l *x) {
-
-ua_l *current;
-ua_l *next_node;
-
-  int bulan_temp;
-  int tanggal_temp;
-  int jam_temp;
-  int menit_temp;
-  std::string nama_pengisi_temp;
-  std::string kode_nama_temp;
-  std::string nama_tempat_temp;
-  std::string daerah_temp;
-  int no_kajian_temp;
-
-int size=counting_kajian(x)+1;
-int k=counting_kajian(x);
-for (size_t i = 0; i < size-1; i++) {
-  current=admin->point;
-  next_node=admin->point->next;
-
-  for (size_t z = 0; z <k; z++) {
-      if(current->tanggal < next_node->tanggal){
-        /*tukar hari antar node*/
-        tanggal_temp=current->tanggal;
-        current->tanggal=next_node->tanggal;
-        next_node->tanggal=tanggal_temp;
-
-        /*tukar bulan antar node*/
-        bulan_temp=current->bulan;
-        current->bulan=next_node->bulan;
-        next_node->bulan=bulan_temp;
-
-
-        /*Tukar Jam antar node*/
-        jam_temp=current->jam;
-        current->jam=next_node->jam;
-        next_node->jam=jam_temp;
-
-
-        /*Tukar menit antar node*/
-        menit_temp=current->menit;
-        current->menit=next_node->menit;
-        next_node->menit=menit_temp;
-
-        /*Tukar nama_pengisi antar node*/
-        nama_pengisi_temp=current->nama_pengisi;
-        current->nama_pengisi=next_node->nama_pengisi;
-        next_node->nama_pengisi=nama_pengisi_temp;
-
-
-        /*Tukar kode_nama antar node*/
-        kode_nama_temp=current->kode_nama;
-        current->kode_nama=next_node->kode_nama;
-        next_node->kode_nama=kode_nama_temp;
-
-
-        /*Tukar daerah antar node*/
-        daerah_temp=current->daerah;
-        current->daerah=next_node->daerah;
-        next_node->daerah=daerah_temp;
-
-
-        /*Tukar nama_tempat antar node*/
-        nama_tempat_temp=current->nama_tempat;
-        current->nama_tempat=next_node->nama_tempat;
-        next_node->nama_tempat=nama_tempat_temp;
-
-
-      }
-
-
-      }
-
-      current = current->next;
-      next_node = next_node->next;
-
+void sortedInsert(ua_l** head_ref,ua_l* new_node)
+{
+    ua_l* current;
+    /* Special case for the head end */
+    if (*head_ref == NULL || (*head_ref)->no_kajian >= new_node->no_kajian)
+    {
+        new_node->next = *head_ref;
+        *head_ref = new_node;
     }
-admin->point=current;
-
+    else
+    {
+        /* Locate the node before the point of insertion */
+        current = *head_ref;
+        while (current->next!=NULL &&
+               current->next->no_kajian< new_node->no_kajian)
+        {
+            current = current->next;
+        }
+        new_node->next = current->next;
+        current->next = new_node;
+    }
 }
+
+
+// function to sort a singly linked list using insertion sort
+void insertionSort(ua_l**head_ref)
+{
+    // Initialize sorted linked list
+     ua_l *sorted = NULL;
+
+    // Traverse the given linked list and insert every
+    // node to sorted
+     ua_l *current = *head_ref;
+
+    while (current != NULL)
+    {
+        // Store next for next iteration
+        ua_l *next = current->next;
+
+        // insert current in sorted linked list
+        sortedInsert(&sorted, current);
+
+        // Update current
+        current = next;
+    }
+
+    // Update head_ref to point to sorted linked list
+    *head_ref = sorted;
+}
+
+
+
+/*Bikin Algoritma sorting*/
+
 
 void show_event_admin(admin_priv *x) {
   ua_l *temp=new ua_l;
@@ -134,11 +105,11 @@ int key;
 std::cout << "Masukkan No Kajian : " << '\n';
 std::cin >> key;
 
-
     // If head node itself holds the key to be deleted
     if (temp != NULL && temp->no_kajian == key)
     {
         *head_ref = temp->next;   // Changed head
+
         free(temp);               // free old head
         return;
     }
@@ -147,8 +118,9 @@ std::cin >> key;
     // previous node as we need to change 'prev->next'
     while (temp != NULL && temp->no_kajian != key)
     {
-        prev = temp;
-        temp = temp->next;
+
+        prev = temp; //make addresss previous
+        temp = temp->next; //move to next address
     }
 
     // If key was not present in linked list
@@ -199,7 +171,7 @@ void make_pengisi(pengisi *z) {
 pengisi *temp=new pengisi;
 
   std::string nama_pengisi_temp;
-  std::cout << "Masukkan Nama Pengisi : " << '\n';
+  std::cout << "Masukkan Nama Pengisi : ";
 
   std::getline(std::cin,nama_pengisi_temp,'\n');
   temp->nama_pengisi_=nama_pengisi_temp;
@@ -207,14 +179,11 @@ pengisi *temp=new pengisi;
   pengisi:
   std::cout << "Masukkan Kode Pengisi" << '\n';
   std::cin >> temp->kode_nama_;
+
 /*Mekanisme linked list*/
 temp->next=head_p;
 head_p=temp;
 data_p=head_p;
-
-
-/*Lakukan Algoritma pencarian  dengan kode pengisi jika belum ada tambahkan
-Jika Belum, ulang langkah kode pengisi*/
 
 
 }
@@ -293,7 +262,7 @@ if (temp_p!=NULL) {
 else{
 goto kode_kode;
 }
-temp->no_kajian=(counting_kajian(x->point))+1;
+temp->no_kajian=(counting_kajian(x->point))+1001;
 
 
 
@@ -326,7 +295,7 @@ if (flag_code!=0) {
 
   switch (pilih) {
     case 1:{make_event(admin); break;}
-    case 2:{show_event_admin(admin);hapus_jadwal(&admin->point);break;}
+    case 2:{insertionSort(&admin->point);show_event_admin(admin);hapus_jadwal(&admin->point);break;}
     case 3:{make_pengisi(data_p);break;}
     case 4:{ system("clear");return 4;}
   }
