@@ -26,7 +26,6 @@ temp=object;
 
 while (object!=NULL) {
   if (cari==temp->kode_nama_) {
-
     return object;
     break;
   }

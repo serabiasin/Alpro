@@ -2,6 +2,106 @@
 #define function_admin
 
 
+/*Counting banyaknya kajian sebagai ID*/
+int counting_kajian(ua_l *z){
+
+ua_l *temp=new ua_l;
+temp=z;
+int x=0;
+
+while (temp!=NULL) {
+x++;
+temp=temp->next;
+
+}
+
+return x;
+}
+
+
+
+void sorting_date(ua_l *x) {
+
+ua_l *current;
+ua_l *next_node;
+
+  int bulan_temp;
+  int tanggal_temp;
+  int jam_temp;
+  int menit_temp;
+  std::string nama_pengisi_temp;
+  std::string kode_nama_temp;
+  std::string nama_tempat_temp;
+  std::string daerah_temp;
+  int no_kajian_temp;
+
+int size=counting_kajian(x)+1;
+int k=counting_kajian(x);
+for (size_t i = 0; i < size-1; i++) {
+  current=admin->point;
+  next_node=admin->point->next;
+
+  for (size_t z = 0; z <k; z++) {
+      if(current->tanggal < next_node->tanggal){
+        /*tukar hari antar node*/
+        tanggal_temp=current->tanggal;
+        current->tanggal=next_node->tanggal;
+        next_node->tanggal=tanggal_temp;
+
+        /*tukar bulan antar node*/
+        bulan_temp=current->bulan;
+        current->bulan=next_node->bulan;
+        next_node->bulan=bulan_temp;
+
+
+        /*Tukar Jam antar node*/
+        jam_temp=current->jam;
+        current->jam=next_node->jam;
+        next_node->jam=jam_temp;
+
+
+        /*Tukar menit antar node*/
+        menit_temp=current->menit;
+        current->menit=next_node->menit;
+        next_node->menit=menit_temp;
+
+        /*Tukar nama_pengisi antar node*/
+        nama_pengisi_temp=current->nama_pengisi;
+        current->nama_pengisi=next_node->nama_pengisi;
+        next_node->nama_pengisi=nama_pengisi_temp;
+
+
+        /*Tukar kode_nama antar node*/
+        kode_nama_temp=current->kode_nama;
+        current->kode_nama=next_node->kode_nama;
+        next_node->kode_nama=kode_nama_temp;
+
+
+        /*Tukar daerah antar node*/
+        daerah_temp=current->daerah;
+        current->daerah=next_node->daerah;
+        next_node->daerah=daerah_temp;
+
+
+        /*Tukar nama_tempat antar node*/
+        nama_tempat_temp=current->nama_tempat;
+        current->nama_tempat=next_node->nama_tempat;
+        next_node->nama_tempat=nama_tempat_temp;
+
+
+      }
+
+
+      }
+
+      current = current->next;
+      next_node = next_node->next;
+
+    }
+admin->point=current;
+
+}
+
 void show_event_admin(admin_priv *x) {
   ua_l *temp=new ua_l;
   temp=x->point;
@@ -26,45 +126,39 @@ std::cout << "\n\n\n\n" << '\n';
 
 }
 
-/*jika node lebih > 1*/
-ua_l* hapus_jadwal(admin_priv *x){
-  int no;
-  ua_l *current = x->point;
-  ua_l *previous = NULL;
+void hapus_jadwal(struct ua_l **head_ref)
+{
+    // Store head node
+    struct ua_l* temp = *head_ref, *prev;
+int key;
+std::cout << "Masukkan No Kajian : " << '\n';
+std::cin >> key;
 
-  //if list is empty
-  if(head == NULL) {
-     return NULL;
-  }
 
-  //navigate through list
-  while(current->no_kajian != no) {
+    // If head node itself holds the key to be deleted
+    if (temp != NULL && temp->no_kajian == key)
+    {
+        *head_ref = temp->next;   // Changed head
+        free(temp);               // free old head
+        return;
+    }
 
-     //if it is last node
-     if(current->next == NULL) {
-        return NULL;
-     } else {
-        //store reference to current link
-        previous = current;
-        //move to next link
-        current = current->next;
-     }
-  }
+    // Search for the key to be deleted, keep track of the
+    // previous node as we need to change 'prev->next'
+    while (temp != NULL && temp->no_kajian != key)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
 
-  //found a match, update the link
-  if(current == head) {
-     //change first to point to next link
-     head = head->next;
-  } else {
-    /*disini lah data sebelumnya tersambung ke link data yang terhapus*/
-     //bypass the current link
-     previous->next = current->next;
-  }
+    // If key was not present in linked list
+    if (temp == NULL) return;
 
-  return current;
+    // Unlink the node from linked list
+    prev->next = temp->next;
 
+    free(temp);  // Free memory
 }
-
 
 /*Mengambil Nama Pengisi*/
 pengisi* find_pengisi(pengisi *object,std::string cari){
@@ -136,22 +230,6 @@ void show_pengisi(pengisi *data) {
   std::cout << "\n" << '\n';
 }
 
-
-/*Counting banyaknya kajian sebagai ID*/
-int counting_kajian(ua_l *z){
-
-ua_l *temp=new ua_l;
-temp=z;
-int x=0;
-
-while (temp!=NULL) {
-x++;
-temp=temp->next;
-
-}
-
-return x;
-}
 
 
 /*Menu buat data nama_pengisi*/
@@ -225,9 +303,7 @@ x->point=head;
 system("clear");
 
 }
-void delete_event(admin_priv *x) {
 
-}
 
 
 /*BUAT ADMIN*/
@@ -250,7 +326,7 @@ if (flag_code!=0) {
 
   switch (pilih) {
     case 1:{make_event(admin); break;}
-    case 2:{show_event_admin(admin);hapus_jadwal(admin);break;}
+    case 2:{show_event_admin(admin);hapus_jadwal(&admin->point);break;}
     case 3:{make_pengisi(data_p);break;}
     case 4:{ system("clear");return 4;}
   }
