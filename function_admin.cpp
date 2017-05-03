@@ -172,9 +172,10 @@ pengisi *temp=new pengisi;
 
   std::string nama_pengisi_temp;
   std::cout << "Masukkan Nama Pengisi : ";
-
+  std::cin.ignore();
   std::getline(std::cin,nama_pengisi_temp,'\n');
   temp->nama_pengisi_=nama_pengisi_temp;
+  std::cin.clear();
 
   pengisi:
   std::cout << "Masukkan Kode Pengisi" << '\n';
@@ -235,13 +236,13 @@ if (temp->jam>24 or temp->menit>60) {
 
 std::string daerah_temp;
 std::cout << "Masukkan Daerah : " << '\n';
-std::cin.ignore(1);
+std::cin.ignore();
 std::getline(std::cin,daerah_temp,'\n');
 temp->daerah=daerah_temp;
 
 std::string nama_tempat_temp;
 std::cout << "Masukkan Tempat Kajian Berlangsung : " << '\n';
-std::cin.ignore(1);
+std::cin.ignore();
 std::getline(std::cin,nama_tempat_temp,'\n');
 temp->nama_tempat=nama_tempat_temp;
 

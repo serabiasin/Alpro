@@ -319,10 +319,10 @@ user->point_to=head;
 usr_menu();
 std::cin >> pilih;
 switch (pilih) {
-  case 1:{show_event_pengisi(user);break;}
-  case 2:{show_event_date(user);break;} //done
-  case 3:{show_event_time(user);break;} //done
-  case 4:{show_event_dt(user);break;} //done
+  case 1:{system("clear");show_event_pengisi(user);break;}
+  case 2:{system("clear");show_event_date(user);break;} //done
+  case 3:{system("clear");show_event_time(user);break;} //done
+  case 4:{system("clear");show_event_dt(user);break;} //done
   case 5:{delete user; return 4;break;} //mencegah memory leak
 }
 
