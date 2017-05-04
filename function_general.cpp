@@ -8,6 +8,13 @@
 #include <time.h>
 
 
+char press_anything(){
+  char x;
+  std::cout << "Press Anything....." << '\n';
+  std::cin >> x;
+  return 0;
+}
+
 void show_pengisi_user(pengisi *data) {
   std::cout << "================================================" << '\n';
   std::cout << "NAMA " << '\t'<<'\t'<<'\t'<<"KODE"<<std::endl;
@@ -319,10 +326,10 @@ user->point_to=head;
 usr_menu();
 std::cin >> pilih;
 switch (pilih) {
-  case 1:{system("clear");show_event_pengisi(user);break;}
-  case 2:{system("clear");show_event_date(user);break;} //done
-  case 3:{system("clear");show_event_time(user);break;} //done
-  case 4:{system("clear");show_event_dt(user);break;} //done
+  case 1:{system("clear");show_event_pengisi(user);press_anything();system("clear");break;}
+  case 2:{system("clear");show_event_date(user);press_anything();system("clear");break;} //done
+  case 3:{system("clear");show_event_time(user);press_anything();system("clear");break;} //done
+  case 4:{system("clear");show_event_dt(user);press_anything();system("clear");break;} //done
   case 5:{delete user; return 4;break;} //mencegah memory leak
 }
 
